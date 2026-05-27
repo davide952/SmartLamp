@@ -1,42 +1,108 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  padding: 24px;
+}
+
+.header {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.header h1 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #666;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bulb {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  transition: background 0.4s, box-shadow 0.4s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.bulb.on {
+  background: #f5c542;
+  box-shadow: 0 0 32px #f5c54266;
 }
 
-.card {
-  padding: 2em;
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 280px;
 }
 
-.read-the-docs {
-  color: #888;
+.btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
 }
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-on {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.btn-off {
+  background: #e8e8e8;
+  color: #1a1a1a;
+}
+
+.btn-on:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.btn-off:hover:not(:disabled) {
+  background: #ddd;
+}
+
+.status {
+  font-size: 0.75rem;
+  color: #999;
+  text-align: center;
+  min-height: 16px;
+  letter-spacing: 0.04em;
+}
+
+.status.ok { color: #4caf50; }
+.status.err { color: #e53935; }
+.status.loading { color: #f5c542; }
+
+.logout {
+  background: none;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: #bbb;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px;
+}
+
+.logout:hover { color: #888; }
