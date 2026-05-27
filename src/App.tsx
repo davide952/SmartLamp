@@ -1,11 +1,19 @@
+import { useState } from 'react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import './App.css';
 
 const API_URL = "https://3rkrufkw17.execute-api.eu-north-1.amazonaws.com/led";
 
 function App() {
-  const { signOut, user } = useAuthenticator();
+  const { signOut } = useAuthenticator();
+  const [isOn, setIsOn] = useState(false);
+  const [status, setStatus] = useState({ text: '', type: '' });
+  const [loading, setLoading] = useState(false);
 
   async function sendCommand(action: string) {
+    setLoading(true);
+    setStatus({ text: 'invio...', type: 'loading' });
+
     try {
       const res = await fetch(API_URL, {
         method: 'POST',
@@ -13,19 +21,49 @@ function App() {
         body: JSON.stringify({ action })
       });
       const data = await res.json();
-      alert(data.result || data.error);
-    } catch (e) {
-      alert('Errore di connessione');
+
+      if (res.ok) {
+        setIsOn(action === 'ON');
+        setStatus({ text: action === 'ON' ? 'lampada accesa' : 'lampada spenta', type: 'ok' });
+      } else {
+        setStatus({ text: data.error || 'errore', type: 'err' });
+      }
+    } catch {
+      setStatus({ text: 'errore di connessione', type: 'err' });
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <main>
-      <h1>Ciao {user?.signInDetails?.loginId}</h1>
-      <button onClick={() => sendCommand('ON')}>Accendi</button>
-      <button onClick={() => sendCommand('OFF')}>Spegni</button>
-      <button onClick={signOut}>Logout</button>
-    </main>
+    <div className="container">
+      <div className="header">
+        <h1>Lampada</h1>
+      </div>
+
+      <div className={`bulb ${isOn ? 'on' : ''}`} />
+
+      <div className="controls">
+        <button
+          className="btn btn-on"
+          onClick={() => sendCommand('ON')}
+          disabled={loading}
+        >
+          Accendi
+        </button>
+        <button
+          className="btn btn-off"
+          onClick={() => sendCommand('OFF')}
+          disabled={loading}
+        >
+          Spegni
+        </button>
+      </div>
+
+      <p className={`status ${status.type}`}>{status.text}</p>
+
+      <button className="logout" onClick={signOut}>Esci</button>
+    </div>
   );
 }
 
