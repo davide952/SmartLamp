@@ -44,19 +44,20 @@ function App() {
       <div className={`bulb ${isOn ? 'on' : ''}`} />
 
       <div className="controls">
-        <button
-          className="btn btn-on"
-          onClick={() => sendCommand('ON')}
-          disabled={loading}
-        >
+        <button className="btn btn-on" onClick={() => sendCommand('ON')} disabled={loading}>
           Accendi
         </button>
-        <button
-          className="btn btn-off"
-          onClick={() => sendCommand('OFF')}
-          disabled={loading}
-        >
+        <button className="btn btn-off" onClick={() => sendCommand('OFF')} disabled={loading}>
           Spegni
+        </button>
+      
+        <hr style={{ border: 'none', borderTop: '1px solid #e0e0e0', margin: '8px 0' }} />
+      
+        <button className="btn btn-off" onClick={() => sendCommand('MODE_LDR')} disabled={loading}>
+          Modalità Luce
+        </button>
+        <button className="btn btn-off" onClick={() => sendCommand('MODE_DISTANCE')} disabled={loading}>
+          Modalità Distanza
         </button>
       </div>
 
