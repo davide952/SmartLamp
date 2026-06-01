@@ -22,16 +22,18 @@ function App() {
       });
       const data = await res.json();
 
-      if (res.ok) {
-        setIsOn(action === 'ON');
-        setStatus({ text: action === 'ON' ? 'lampada accesa' : 'lampada spenta', type: 'ok' });
-      } else {
-        setStatus({ text: data.error || 'errore', type: 'err' });
+         if (res.ok) {
+      if (action === 'ON') {
+        setIsOn(true);
+        setStatus({ text: 'lampada accesa', type: 'ok' });
+      } else if (action === 'OFF') {
+        setIsOn(false);
+        setStatus({ text: 'lampada spenta', type: 'ok' });
+      } else if (action === 'MODE_LDR') {
+        setStatus({ text: 'modalità luce attiva', type: 'ok' });
+      } else if (action === 'MODE_DISTANCE') {
+        setStatus({ text: 'modalità distanza attiva', type: 'ok' });
       }
-    } catch {
-      setStatus({ text: 'errore di connessione', type: 'err' });
-    } finally {
-      setLoading(false);
     }
   }
 
