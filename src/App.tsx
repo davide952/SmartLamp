@@ -34,8 +34,15 @@ function App() {
       } else if (action === 'MODE_DISTANCE') {
         setStatus({ text: 'modalità distanza attiva', type: 'ok' });
       }
+    } else {
+      setStatus({ text: data.error || 'errore', type: 'err' });
     }
+  } catch {
+    setStatus({ text: 'errore di connessione', type: 'err' });
+  } finally {
+    setLoading(false);
   }
+}
 
   return (
     <div className="container">
@@ -68,6 +75,5 @@ function App() {
       <button className="logout" onClick={signOut}>Esci</button>
     </div>
   );
-}
 }
 export default App;
