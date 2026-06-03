@@ -14,9 +14,9 @@ function App() {
   const [color, setColor] = useState('#ffffff');
 
   async function sendBrightness(value: number) {
-    const r = Math.round(parseInt(color.slice(1,3), 16) * value / 255);
-    const g = Math.round(parseInt(color.slice(3,5), 16) * value / 255);
-    const b = Math.round(parseInt(color.slice(5,7), 16) * value / 255);
+    const r = Math.round(parseInt(color.slice(1,3), 16) * (255 - value) / 255); //logica invertita per l'anodo comune, minimo 255 e max 0
+    const g = Math.round(parseInt(color.slice(3,5), 16) * (255 - value) / 255);
+    const b = Math.round(parseInt(color.slice(5,7), 16) * (255 - value) / 255);
     await sendCommand(`COLOR:${r},${g},${b}`);
   }
 
@@ -80,9 +80,12 @@ function App() {
         </button>
 
         <input 
-          type="range" min="255" max="0" value={brightness}
-          onChange={(e) => { setBrightness(Number(e.target.value)); sendBrightness(Number(e.target.value)); }}
+          type="range" min="0" max="255" value={brightness}
+          onChange={(e) => setBrightness(Number(e.target.value))}
+          onMouseUp={(e) => sendBrightness(Number((e.target as HTMLInputElement).value))}
+          onTouchEnd={(e) => sendBrightness(Number((e.target as HTMLInputElement).value))}
         />
+        
         <input 
           type="color" value={color}
           onChange={(e) => { setColor(e.target.value); sendBrightness(brightness); }}
