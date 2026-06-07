@@ -99,7 +99,7 @@ function App() {
             sendCommand(`COLOR:${r},${g},${b}`);
           }}
         />
-
+      </div>
       <p className={`status ${status.type}`}>{status.text}</p>
 
       <button className="logout" onClick={signOut}>Esci</button>
