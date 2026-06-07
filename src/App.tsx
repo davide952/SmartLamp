@@ -14,9 +14,9 @@ function App() {
   const [color, setColor] = useState('#ffffff');
 
   async function sendBrightness(value: number) {
-    const r = 255 - Math.round(parseInt(color.slice(1,3), 16) * value / 255); //logica invertita per l'anodo comune, minimo 255 e max 0
-    const g = 255 - Math.round(parseInt(color.slice(3,5), 16) * value / 255); //taglia la stringa per prendere solo i due caratteri esadecimali del colorpicker
-    const b = 255 - Math.round(parseInt(color.slice(5,7), 16) * value / 255);
+    const r = Math.round(parseInt(color.slice(1,3), 16) * value / 255); //logica invertita per l'anodo comune, minimo 255 e max 0
+    const g = Math.round(parseInt(color.slice(3,5), 16) * value / 255); //taglia la stringa per prendere solo i due caratteri esadecimali del colorpicker
+    const b = Math.round(parseInt(color.slice(5,7), 16) * value / 255);
     await sendCommand(`COLOR:${r},${g},${b}`);
   }
 
