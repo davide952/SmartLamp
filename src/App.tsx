@@ -87,10 +87,18 @@ function App() {
         />
         
         <input 
-          type="color" value={color}
-          onChange={(e) => { setColor(e.target.value); sendBrightness(brightness); }}
-        />        
-      </div>
+          type="color" 
+          value={color}
+          onChange={(e) => {
+            const newColor = e.target.value;
+            setColor(newColor);
+            // usa newColor direttamente, non color (che è ancora il vecchio valore)
+            const r = Math.round(parseInt(newColor.slice(1,3), 16) * brightness / 255);
+            const g = Math.round(parseInt(newColor.slice(3,5), 16) * brightness / 255);
+            const b = Math.round(parseInt(newColor.slice(5,7), 16) * brightness / 255);
+            sendCommand(`COLOR:${r},${g},${b}`);
+          }}
+        />
 
       <p className={`status ${status.type}`}>{status.text}</p>
 
